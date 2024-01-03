@@ -89,12 +89,15 @@ function ENT:Initialize()
 		ReverseForward = false,
 		ReverseBackward = false,
 		FullBrake = false,
+		FastPedals = false,
 		
 		StartPedal = 0,
 		BrakePedal = 0,
 		
 		Steer = 0,
 		SteerActive = false,
+
+		Speed = 0,
 	}
 	
 	self.OldControls = table.Copy(self.Controls)
@@ -773,6 +776,8 @@ function ENT:SetupControls()
 	C.ReverseForward = active and IsButtonDown(ply,"reverseforward")
 	C.ReverseBackward = active and IsButtonDown(ply,"reversebackward")
 	C.FullBrake = active and IsButtonDown(ply,"fullbrake")
+	C.FastPedals = active and IsButtonDown(ply,"fastpedals")
+	C.Speed = math.abs(self:GetMoveSpeed())
 	
 	if self.AllowKeyboardHandbrakeToggle and C.Handbrake and !OC.Handbrake then
 		self:ToggleHandbrake()
@@ -839,6 +844,8 @@ function ENT:SetupControls_Steer(ply,dt,C,OC)
 				if IsButtonDown(ply,"steerleft") or IsButtonDown(ply,"steerright") then
 					C.Steer = math.Clamp(C.Steer+spd*(IsButtonDown(ply,"steerleft") and 1 or -1)*dt,-1,1)
 					C.SteerActive = true
+				elseif Trolleybus_System.GetPlayerSetting("InvertSteerReturn") then
+					C.SteerActive = IsButtonDown(ply,"steerreturn") or IsButtonDown(ply,"faststeer")
 				elseif IsButtonDown(ply,"steerreturn") then
 					C.SteerActive = false
 				end

@@ -37,6 +37,7 @@ Trolleybus_System.DefaultControls = {
 		reverseforward = KEY_0,
 		reversebackward = KEY_9,
 		fullbrake = KEY_BACKSPACE,
+		fastpedals = KEY_LSHIFT,
 	},
 	Trolleybuses = {},
 	Systems = {},
@@ -270,6 +271,18 @@ Trolleybus_System.Settings = {
 	},
 	UseExternalButtons = {
 		Order = 29,
+		Network = true,
+		DefaultValue = false,
+		Type = "CheckBox",
+	},
+	InvertSteerReturn = {
+		Order = 30,
+		Network = true,
+		DefaultValue = false,
+		Type = "CheckBox",
+	},
+	TrP_Pedals = {
+		Order = 31,
 		Network = true,
 		DefaultValue = false,
 		Type = "CheckBox",

@@ -51,6 +51,7 @@ if SERVER then
 	include("sv_settings.lua")
 	include("sv_contactnetwork.lua")
 	include("sv_routes.lua")
+	include("sv_controlschemes.lua")
 else
 	include("cl_util.lua")
 	include("cl_init.lua")

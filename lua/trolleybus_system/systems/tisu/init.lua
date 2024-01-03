@@ -106,41 +106,7 @@ function SYSTEM:SetTISUBlockActive(active)
 	self.TISUActive = active
 end
 
-function SYSTEM:ControlPedals(ply,dt,C,OC)
-	if Trolleybus_System.GetPlayerSetting(ply,"UseExternalPedals") then
-		local startpedal = ply.TrolleybusDeviceInputData_startpedal
-		local brakepedal = ply.TrolleybusDeviceInputData_brakepedal
-	
-		C.StartPedal = C.BrakePedal>0 and 0 or startpedal and startpedal*4 or C.StartPedal
-		C.BrakePedal = brakepedal and brakepedal*3 or C.BrakePedal
-	else
-		if C.FullBrake then
-			C.StartPedal = 0
-			C.BrakePedal = 3
-		else
-			if C.Reset then
-				if !OC.Reset then
-					C.StartPedal = 0
-					C.BrakePedal = 0
-				end
-			elseif C.SActive then
-				C.StartPedal = 0
-				
-				if !OC.SActive and C.BrakePedal<2 then
-					C.BrakePedal = math.min(2,C.BrakePedal+1)
-				elseif (C.BrakePedal>2 or C.BrakePedal==2 and !OC.SActive) and C.BrakePedal<3 then
-					C.BrakePedal = math.min(C.BrakePedal+dt,3)
-				end
-			elseif C.WActive then
-				C.BrakePedal = 0
-			
-				if !OC.WActive and C.StartPedal<4 then
-					C.StartPedal = math.min(4,C.StartPedal+1)
-				end
-			end
-		end
-	end
-end
+SYSTEM.ControlPedals = Trolleybus_System.GetControlScheme("ziu_pedals")
 
 Trolleybus_System.RegisterSystem("TISU",SYSTEM)
 SYSTEM = nil

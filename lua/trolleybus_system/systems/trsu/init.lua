@@ -52,35 +52,7 @@ function SYSTEM:GetEngineBrakeFraction()
 	return self.EngineBrakeFraction or 0
 end
 
-function SYSTEM:ControlPedals(ply,dt,C,OC)
-	if Trolleybus_System.GetPlayerSetting(ply,"UseExternalPedals") then
-		local startpedal = ply.TrolleybusDeviceInputData_startpedal
-		local brakepedal = ply.TrolleybusDeviceInputData_brakepedal
-	
-		C.StartPedal = C.BrakePedal>0 and 0 or startpedal or C.StartPedal
-		C.BrakePedal = brakepedal or C.BrakePedal
-	else
-		if C.FullBrake then
-			C.StartPedal = 0
-			C.BrakePedal = 1
-		else
-			if C.Reset then
-				if !OC.Reset then
-					C.StartPedal = 0
-					C.BrakePedal = 0
-				end
-			elseif C.SActive then
-				C.StartPedal = 0
-				
-				C.BrakePedal = math.min(1,C.BrakePedal+dt)
-			elseif C.WActive then
-				C.BrakePedal = 0
-				
-				C.StartPedal = math.min(1,C.StartPedal+dt)
-			end
-		end
-	end
-end
+SYSTEM.ControlPedals = Trolleybus_System.GetControlScheme("bus_pedals")
 
 Trolleybus_System.RegisterSystem("TRSU",SYSTEM)
 SYSTEM = nil
