@@ -106,7 +106,9 @@ function SYSTEM:SetTISUBlockActive(active)
 	self.TISUActive = active
 end
 
-SYSTEM.ControlPedals = Trolleybus_System.GetControlScheme("ziu_pedals")
+function SYSTEM:ControlPedals(ply,dt,C,OC)
+	Trolleybus_System.GetControlScheme("ziu_pedals")(ply,dt,C,OC)
+end
 
 Trolleybus_System.RegisterSystem("TISU",SYSTEM)
 SYSTEM = nil

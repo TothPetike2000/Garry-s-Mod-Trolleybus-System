@@ -52,7 +52,9 @@ function SYSTEM:GetEngineBrakeFraction()
 	return self.EngineBrakeFraction or 0
 end
 
-SYSTEM.ControlPedals = Trolleybus_System.GetControlScheme("bus_pedals")
+function SYSTEM:ControlPedals(ply,dt,C,OC)
+	Trolleybus_System.GetControlScheme("bus_pedals")(ply,dt,C,OC)
+end
 
 Trolleybus_System.RegisterSystem("TRSU",SYSTEM)
 SYSTEM = nil

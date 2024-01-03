@@ -33,7 +33,7 @@ Trolleybus_System.ControlSchemes = Trolleybus_System.ControlSchemes or {
                 else
                     C.StartPedal = (C.StartPedal>0 and C.FastPedals and !C.Reset) and 0.1 or 0
 
-                    if !C.Speed<1 or C.Reset then
+                    if !(C.Speed<1) or C.Reset then
                         C.BrakePedal = (C.BrakePedal>0 and C.FastPedals and !C.Reset) and 0.1 or 0
                     end
                 end
@@ -91,7 +91,7 @@ Trolleybus_System.ControlSchemes = Trolleybus_System.ControlSchemes or {
                 else
                     C.StartPedal = (C.StartPedal>0 and C.FastPedals and !C.Reset) and 1 or 0
 
-                    if !C.Speed<1 or C.Reset then
+                    if !(C.Speed<1) or C.Reset then
                         C.BrakePedal = (C.BrakePedal>0 and C.FastPedals and !C.Reset) and 1 or 0
                     end
                 end

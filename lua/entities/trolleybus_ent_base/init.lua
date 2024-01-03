@@ -844,7 +844,7 @@ function ENT:SetupControls_Steer(ply,dt,C,OC)
 				if IsButtonDown(ply,"steerleft") or IsButtonDown(ply,"steerright") then
 					C.Steer = math.Clamp(C.Steer+spd*(IsButtonDown(ply,"steerleft") and 1 or -1)*dt,-1,1)
 					C.SteerActive = true
-				elseif Trolleybus_System.GetPlayerSetting("InvertSteerReturn") then
+				elseif Trolleybus_System.GetPlayerSetting(ply,"InvertSteerReturn") then
 					C.SteerActive = IsButtonDown(ply,"steerreturn") or IsButtonDown(ply,"faststeer")
 				elseif IsButtonDown(ply,"steerreturn") then
 					C.SteerActive = false
