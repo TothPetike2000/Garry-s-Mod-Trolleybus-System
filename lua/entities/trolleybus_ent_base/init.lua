@@ -69,7 +69,6 @@ function ENT:Initialize()
 	self:SetupSeats()
 	self:SetupButtons()
 	self:SetupLights()
-	self:SetupInformator()
 	self:SetupSystems()
 	
 	self:SetHandbrakeActive(true)
@@ -417,14 +416,14 @@ function ENT:SetupWheels()
 	end
 end
 
-function ENT:SetupInformator()
-	self.InformatorData = {
-		Playlines = {},
-		Sound = "",
-		SoundID = 0,
-		Length = 0,
-		Time = CurTime(),
-	}
+function ENT:Announce(msg,vol)
+	net.Start("Trolleybus_System.Announcer")
+	net.WriteEntity(self)
+	net.WriteString(msg or "_S")
+	net.WriteFloat(vol or 1)
+	net.Broadcast()
+
+	if IsValid(self:GetTrailer()) then self:GetTrailer():Announce(msg,vol) end
 end
 
 function ENT:SetTurn(ang)

@@ -244,6 +244,23 @@ function ENT:CreateClientEnts()
 			door:SetCycle(start+(aend-start)*door.MoveState)
 		end
 	end
+
+	if self.AnnouncerPositions then
+		self.Speakers = {}
+		for k,v in pairs(self.AnnouncerPositions) do
+			local speaker = ClientsideModel("models/props_generic/loudspeaker.mdl")
+			speaker:SetParent(self)
+			speaker:SetLocalPos(v)
+			speaker:SetLocalAngles(Angle(90,0,0))
+			speaker:SetModelScale(0.5)
+
+			hook.Add("Think",speaker,function(ent)
+				ent:SetNoDraw(not Trolleybus_System.GetPlayerSetting("DebugMode"))
+			end)
+
+			self.Speakers[k] = speaker
+		end
+	end
 	
 	self.PassSeats = {}
 	self.Passengers = {}
@@ -372,6 +389,12 @@ function ENT:ClearClientEnts()
 	
 	if !self.IsTrailer then
 		SafeRemoveEntity(self.Steer)
+	end
+
+	if self.Speakers then
+		for k,v in pairs(self.Speakers) do
+			SafeRemoveEntity(v)
+		end
 	end
 	
 	if self.Doors then

@@ -39,6 +39,7 @@ include("network_vars.lua")
 include("skins.lua")
 include("contactnetwork.lua")
 include("routes.lua")
+include("announcer.lua")
 
 if SERVER then
 	include("sv_util.lua")
